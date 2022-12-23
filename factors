@@ -1,95 +1,97 @@
 #!/usr/bin/env bash
 
+# is a factors challenge
+
 
 
 check_factor()
 
 {
 
-            if [ $# -ne 3 ];
+		if [ $# -ne 3 ];
 
-                        then
+			        then
 
-                                        args=("$@")
+					                args=("$@")
 
-                                                        count=0
+							                count=0
 
-                                                                        num2=1
+									                num2=1
 
-                                                                                        for a in ${args[*]};
+											                for a in ${args[*]};
 
-                                                                                                        do
+														                do
 
-                                                                                                                                if [ $count -gt 1 ];
+																	                        if [ $count -gt 1 ];
 
-                                                                                                                                                        then
+																					                        then
 
-                                                                                                                                                                                        num2=$(echo $a*$num2 | bc)
+																									                                num2=$(echo $a*$num2 | bc)
 
-                                                                                                                                                                                                                fi
+																													                        fi
 
-                                                                                                                                                                                                                                        count=$((count + 1))
+																																                        count=$((count + 1))
 
-                                                                                                                                                                                                                                                        done
+																																			                done
 
-                                                                                                                                                                                                                                                                else
+																																					        else
 
-                                                                                                                                                                                                                                                                                num2=$3
+																																							                num2=$3
 
-                                                                                                                                                                                                                                                                                        fi
-
-
-
-                                                                                                                                                                                                                                                                                                num1=$2
-
-                                                                                                                                                                                                                                                                                                        num=$(echo "$1" | tr ':' '=')
+																																									        fi
 
 
 
-                                                                                                                                                                                                                                                                                                                result=$(echo "if($num2 > $num1) 1 else 0" | bc)
+																																										        num1=$2
 
-                                                                                                                                                                                                                                                                                                                            if ((result == 1)); then
-
-                                                                                                                                                                                                                                                                                                                                            numcp=$num1
-
-                                                                                                                                                                                                                                                                                                                                                            num1=$num2
-
-                                                                                                                                                                                                                                                                                                                                                                            num2=$numcp
-
-                                                                                                                                                                                                                                                                                                                                                                                            fi
+																																											        num=$(echo "$1" | tr ':' '=')
 
 
 
-                    echo "$num$num1*$num2"
+																																												        result=$(echo "if($num2 > $num1) 1 else 0" | bc)
 
-                    }
+																																														        if ((result == 1)); then
 
+																																																		        numcp=$num1
 
+																																																					        num1=$num2
 
-                    if [ $# -ne 1 ]
+																																																								        num2=$numcp
 
-                            then
-
-                                    echo 'Usage: factors <file>'
-
-                                            exit 1
-
-                                            else
+																																																									                fi
 
 
 
-                                                    while read i
+																																																											        echo "$num$num1*$num2"
 
-                                                            do
-
-
-
-                                                                            result=$(factor "$i")
-
-                                                                                            check_factor $result
+																																																											}
 
 
 
-                                                                                                    done < "$1"
+																																																										if [ $# -ne 1 ]
 
-                                                                                                    fi
+																																																										then
+
+																																																											        echo 'Usage: factors <file>'
+
+																																																												        exit 1
+
+																																																												else
+
+
+
+																																																													        while read i
+
+																																																															        do
+
+
+
+																																																																	                result=$(factor "$i")
+
+																																																																			                check_factor $result
+
+
+
+																																																																					        done < "$1"
+
+																																																										fi
